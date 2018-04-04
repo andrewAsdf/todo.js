@@ -1,8 +1,23 @@
 <body>
-    <script src="//unpkg.com/mithril/mithril.js"></script>
+	<script src="//unpkg.com/mithril/mithril.js"></script>
     <script>
-    var root = document.body
+	var root = document.body;
 
-    // your code goes here!
-    </script>
-</body>f
+	var Page = {
+		view: function () {
+			let items = ['A', 'B', 'C']
+
+			return m('main', [
+				m('h1', 'Tennivalók'),
+				m('div', [
+					m('form', m('input', {type: 'text'})),
+					m('button', 'Hozzáad'),
+					m('ul', items.map((item) => m('li', item)))
+				])
+			])
+		}
+	}
+
+	m.mount (root, Page);
+	</script>
+</body>
