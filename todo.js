@@ -1,12 +1,13 @@
 const express = require('express')
 const path = require('path')
 const bodyParser = require('body-parser');
+'use strict'
 
 const app = express()
 app.use(bodyParser.json());
 app.use(express.static('public'))
 
-list = ["Get milk", "Pick up paycheck", "Cash paycheck"]
+var list = ["Get milk", "Pick up paycheck", "Cash paycheck"]
 
 app.get('/list', (req, res) => {
 	res.send(list);

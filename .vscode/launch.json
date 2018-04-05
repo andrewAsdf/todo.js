@@ -7,7 +7,16 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "Launch Program",
+			"name": "Gulp build",
+			"program": "${workspaceFolder}/node_modules/gulp/bin/gulp.js",
+			"args": [
+				"build"
+			]
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Todo app",
 			"program": "${workspaceFolder}\\todo.js"
 		}
 	]
