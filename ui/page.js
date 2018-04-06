@@ -1,3 +1,4 @@
+'use strict';
 
 var m = require('mithril')
 
@@ -9,18 +10,17 @@ var todoData = {
 	fetch: () => m.request('http://localhost:3000/list').then(list => todoData.list = list),
 }
 
-function sendItem() {
-	m.request({
+async function sendItem(item) {
+	const data = await m.request({
 		method: 'POST',
 		url: 'http://localhost:3000/item',
-		data: { text: todoData.newItem }
-	}).then((data) => {
-		todoData.list.push(data.added)
+		data: { text: item }
 	});
+	todoData.list.push(data.added);
 }
 
 function clearInput() {
-	todoData.newItem = ''
+	todoData.newItem = '';
 }
 
 function createInputElem() {
@@ -33,10 +33,17 @@ function createInputElem() {
 
 function createButton () {
 	return m('button', {
-		onclick: () => {
-			if (todoData.newItem.length > 0) {
-				sendItem();
-				clearInput();
+		onclick: async () => {
+			if (todoData.newItem) {
+				const item = todoData.newItem;
+				todoData.newItem = '';
+				try {
+					await sendItem(item);
+					clearInput();
+				}
+				catch (err) {
+					console.error(err);
+				}
 			}
 		}
 	}, 'Hozzáad')
