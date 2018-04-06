@@ -1,19 +1,22 @@
 'use strict';
 
-var gulp = require('gulp-help')(require('gulp'));
+const gulp = require('gulp-help')(require('gulp'));
 
-var browserify = require('browserify');
-var buffer = require('vinyl-buffer');
-var log = require('gulplog');
-var source = require('vinyl-source-stream');
-var sourcemaps = require('gulp-sourcemaps');
-var minify = require('gulp-minify');
-var globby = require('globby');
-var through = require('through2');
-var watch = require('gulp-watch');
+const browserify = require('browserify');
+const buffer = require('vinyl-buffer');
+const log = require('gulplog');
+const source = require('vinyl-source-stream');
+const sourcemaps = require('gulp-sourcemaps');
+const minify = require('gulp-minify');
+const globby = require('globby');
+const through = require('through2');
+const watch = require('gulp-watch');
+
+const comment = require('./comment.js');
+const concat = require('./concat.js');
 
 function createBrowserifyStream () {
-	var bundledStream = through();
+	let bundledStream = through();
 	bundledStream
 		.pipe(source('bundle.js'))
 		.pipe(buffer())
@@ -24,7 +27,7 @@ function createBrowserifyStream () {
 		.pipe(gulp.dest('./public'));
 
 	globby('./ui/*.js').then(entries => {
-		var b = browserify({
+		let b = browserify({
 			entries: entries,
 			debug: true
 		});
@@ -40,7 +43,7 @@ gulp.task('build', 'Browserify the ui, and put it in the public folder', functio
 
 gulp.task('stream', 'Do the build on changing a file', function () {
     // Endless stream mode
-	var uiFilesStream = watch('./ui/*.js', { ignoreInitial: false });
+	let uiFilesStream = watch('./ui/*.js', { ignoreInitial: false });
 	uiFilesStream.on('data', chunk => {
 		createBrowserifyStream ();
 	});
@@ -48,5 +51,8 @@ gulp.task('stream', 'Do the build on changing a file', function () {
 });
 
 gulp.task('szevasz', 'Merges files with an added comment on top of each one', function () {
-
+	return gulp.src('./ui/*.js')
+	.pipe(comment('szevasz'))
+	//.pipe(concat())
+	.pipe(gulp.dest('./szevasz'));
 });
