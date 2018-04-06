@@ -46,3 +46,7 @@ gulp.task('stream', 'Do the build on changing a file', function () {
 	});
 	return uiFilesStream;
 });
+
+gulp.task('szevasz', 'Merges files with an added comment on top of each one', function () {
+
+});
