@@ -29,20 +29,20 @@ function createBrowserifyStream () {
 			debug: true
 		});
 
-		b.bundle().pipe(bundledStream)
-	})
+		b.bundle().pipe(bundledStream);
+	});
 
 }
 
 gulp.task('build', 'Browserify the ui, and put it in the public folder', function () {
-	return createBrowserifyStream ()
+	return createBrowserifyStream ();
 });
 
 gulp.task('stream', 'Do the build on changing a file', function () {
     // Endless stream mode
-	var uiFilesStream = watch('./ui/*.js', { ignoreInitial: false })
-	uiFilesStream.on('data', (chunk) => {
+	var uiFilesStream = watch('./ui/*.js', { ignoreInitial: false });
+	uiFilesStream.on('data', chunk => {
 		createBrowserifyStream ();
-	})
-	return uiFilesStream
+	});
+	return uiFilesStream;
 });

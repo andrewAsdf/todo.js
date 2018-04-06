@@ -1,6 +1,6 @@
 'use strict';
 
-var m = require('mithril')
+var m = require('mithril');
 
 var root = document.body;
 
@@ -8,7 +8,7 @@ var todoData = {
 	list: [],
 	newItem: '',
 	fetch: () => m.request('http://localhost:3000/list').then(list => todoData.list = list),
-}
+};
 
 async function sendItem(item) {
 	const data = await m.request({
@@ -26,9 +26,9 @@ function clearInput() {
 function createInputElem() {
 	return m('input', {
 		type: 'text',
-		oninput: m.withAttr("value", (item) => { todoData.newItem = item }),
+		oninput: m.withAttr("value", (item) => { todoData.newItem = item; }),
 		value: todoData.newItem
-	})
+	});
 }
 
 function createButton () {
@@ -46,7 +46,7 @@ function createButton () {
 				}
 			}
 		}
-	}, 'Hozzáad')
+	}, 'Hozzáad');
 }
 
 var Page = {
@@ -57,8 +57,8 @@ var Page = {
 			m('form', createInputElem()),
 			createButton (),
 			m('ul', todoData.list.map((item) => m('li', item)))
-		])
+		]);
 	}
-}
+};
 
 m.mount(root, Page);

@@ -11,7 +11,7 @@ app.use(express.static('public'));
 var db = Promise.promisifyAll(new sqlite3.Database(':memory:'));
 
 db.serialize(() => {
-	var list = ["Get milk", "Pick up paycheck", "Cash paycheck"]
+	var list = ["Get milk", "Pick up paycheck", "Cash paycheck"];
 
 	db.run('CREATE TABLE todo (item TEXT NOT NULL)');
 
@@ -20,7 +20,7 @@ db.serialize(() => {
 		stmt.run(item);
 	}
 	stmt.finalize();
-})
+});
 
 async function storeItem(item) {
 	await db.runAsync('INSERT INTO todo VALUES ($item)', { $item: item });
@@ -46,4 +46,4 @@ app.post('/item', async (req, res, next) => {
 	}
 });
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+app.listen(3000, () => console.log('Example app listening on port 3000!'));
