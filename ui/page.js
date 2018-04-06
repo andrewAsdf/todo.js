@@ -47,11 +47,9 @@ var Page = {
 	view: () => {
 		return m('main', [
 			m('h1', 'Tennivalók'),
-			m('div', [
-				m('form', createInputElem()),
-				createButton (),
-				m('ul', todoData.list.map((item) => m('li', item)))
-			])
+			m('form', createInputElem()),
+			createButton (),
+			m('ul', todoData.list.map((item) => m('li', item)))
 		])
 	}
 }
