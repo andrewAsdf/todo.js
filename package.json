@@ -11,10 +11,14 @@
   },
   "devDependencies": {
     "browserify": "^16.1.1",
+    "globby": "^8.0.1",
     "gulp": "^3.9.1",
     "gulp-help": "^1.6.1",
     "gulp-minify": "^2.1.0",
     "gulp-sourcemaps": "^2.6.4",
+    "gulp-watch": "^5.0.0",
+    "through": "^2.3.8",
+    "through2": "^2.0.3",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0"
   },
