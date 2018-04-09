@@ -52,7 +52,7 @@ gulp.task('stream', 'Do the build on changing a file', function () {
 
 gulp.task('szevasz', 'Merges files with an added comment on top of each one', function () {
 	return gulp.src('./ui/*.js')
-	.pipe(comment('szevasz'))
-	//.pipe(concat())
+	.pipe(comment('szevasz!!'))
+	.pipe(concat('concat.js'))
 	.pipe(gulp.dest('./szevasz'));
 });
