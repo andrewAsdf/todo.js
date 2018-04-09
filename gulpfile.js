@@ -15,16 +15,16 @@ const watch = require('gulp-watch');
 const comment = require('./comment.js');
 const concat = require('./concat.js');
 
-function createBrowserifyStream () {
+function createBrowserifyStream() {
 	let bundledStream = through();
 	bundledStream
-		.pipe(source('bundle.js'))
-		.pipe(buffer())
-		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(minify())
-		.on('error', log.error)
-		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest('./public'));
+	.pipe(source('bundle.js'))
+	.pipe(buffer())
+	.pipe(sourcemaps.init({ loadMaps: true }))
+	.pipe(minify())
+	.on('error', log.error)
+	.pipe(sourcemaps.write('./'))
+	.pipe(gulp.dest('./public'));
 
 	globby('./ui/*.js').then(entries => {
 		let b = browserify({
@@ -38,14 +38,14 @@ function createBrowserifyStream () {
 }
 
 gulp.task('build', 'Browserify the ui, and put it in the public folder', function () {
-	return createBrowserifyStream ();
+	return createBrowserifyStream();
 });
 
 gulp.task('stream', 'Do the build on changing a file', function () {
-    // Endless stream mode
+	// Endless stream mode
 	let uiFilesStream = watch('./ui/*.js', { ignoreInitial: false });
-	uiFilesStream.on('data', chunk => {
-		createBrowserifyStream ();
+	uiFilesStream.on('data', () => {
+		createBrowserifyStream();
 	});
 	return uiFilesStream;
 });

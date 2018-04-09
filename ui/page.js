@@ -1,4 +1,5 @@
 'use strict';
+/* global document */
 
 var m = require('mithril');
 
@@ -7,7 +8,7 @@ var root = document.body;
 var todoData = {
 	list: [],
 	newItem: '',
-	fetch: () => m.request('http://localhost:3000/list').then(list => todoData.list = list),
+	fetch: () => m.request('http://localhost:3000/list').then(list => { todoData.list = list; })
 };
 
 async function sendItem(item) {
@@ -26,12 +27,12 @@ function clearInput() {
 function createInputElem() {
 	return m('input', {
 		type: 'text',
-		oninput: m.withAttr("value", (item) => { todoData.newItem = item; }),
+		oninput: m.withAttr("value", item => { todoData.newItem = item; }),
 		value: todoData.newItem
 	});
 }
 
-function createButton () {
+function createButton() {
 	return m('button', {
 		onclick: async () => {
 			if (todoData.newItem) {
@@ -51,14 +52,12 @@ function createButton () {
 
 var Page = {
 	oninit: todoData.fetch,
-	view: () => {
-		return m('main', [
-			m('h1', 'Tennivalók'),
-			m('form', createInputElem()),
-			createButton (),
-			m('ul', todoData.list.map((item) => m('li', item)))
-		]);
-	}
+	view: () => m('main', [
+		m('h1', 'Tennivalók'),
+		m('form', createInputElem()),
+		createButton(),
+		m('ul', todoData.list.map(item => m('li', item)))
+	])
 };
 
 m.mount(root, Page);

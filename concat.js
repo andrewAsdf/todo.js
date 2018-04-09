@@ -1,26 +1,25 @@
 'use strict';
 
 const Transform = require('stream').Transform;
-const util = require('util');
 const Vinyl = require('vinyl');
 const path = require('path');
 
 module.exports = function (targetName) {
-	return new Transform ({
+	return new Transform({
 		objectMode: true,
 
 		transform: function (chunk, encoding, callback) {
 			if (!this.chunks) {
 				this.chunks = [];
 			}
-			this.chunks.push (chunk);
+			this.chunks.push(chunk);
 			callback(null, null);
 		},
 
 		flush: function (callback) {
 			const newContentPieces = this.chunks.reduce((result, chunk) => {
 				result.push(chunk.contents);
-				result.push(new Buffer ('\n'));
+				result.push(new Buffer('\n'));
 				return result;
 			}, []);
 

@@ -30,6 +30,7 @@ app.get('/list', async (req, res, next) => {
 	try {
 		const list = await db.allAsync('SELECT item FROM todo');
 		res.send(list.map(item => item.item));
+		return null;
 	}
 	catch (err) {
 		return next(err);
@@ -40,6 +41,7 @@ app.post('/item', async (req, res, next) => {
 	try {
 		await storeItem(req.body.text);
 		res.send({ added: req.body.text });
+		return null;
 	}
 	catch (err) {
 		return next(err);
